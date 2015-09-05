@@ -3,16 +3,18 @@
 ;;;;;
 ;;;;; Application
 ;;;;;
-(defun application-at (&key (code *application*) (graph *tree*))
-  (node-at graph 'application :code code))
+(defun application-at (tree &key code)
+  (assert tree)
+  (node-at tree 'application :code code))
 
-(defun tx-make-application (graph code &key (name ""))
-  (when (application-at :code code :graph graph)
+(defun tx-make-application (tree code &key (name ""))
+  (assert tree)
+  (when (application-at tree :code code)
     (error "Aledy exist. code=~code" code))
-  (tx-make-vertex graph 'application
+  (tx-make-vertex tree 'application
                   `((code ,code) (name ,name))))
 
-(defun make-application (code &key (name "") (graph *tree*))
-  (unless graph (setf graph (start)))
+(defun make-application (tree code &key (name ""))
+  (assert tree)
   (up:execute-transaction
-   (tx-make-application graph code :name name)))
+   (tx-make-application tree code :name name)))

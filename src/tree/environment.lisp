@@ -3,16 +3,20 @@
 ;;;;;
 ;;;;; Environment
 ;;;;;
-(defun environment-at (&key (code *environment*) (graph *tree*))
-  (node-at graph 'environment :code code))
+(defun environment-at (tree &key code application)
+  (assert tree)
+  (cond ((and code application) nil)
+        (code (node-at tree 'environment :code code))
+        (t nil)))
 
-(defun tx-make-environment (graph code &key (name ""))
-  (when (environment-at :code code :graph graph)
+(defun tx-make-environment (tree code &key (name ""))
+  (assert tree)
+  (when (environment-at tree :code code)
     (error "Aledy exist. code=~code" code))
-  (tx-make-vertex graph 'environment
+  (tx-make-vertex tree 'environment
                   `((code ,code) (name ,name))))
 
-(defun make-environment (code &key (name "") (graph *tree*))
-  (unless graph (setf graph (start)))
+(defun make-environment (tree code &key (name ""))
+  (assert tree)
   (up:execute-transaction
-   (tx-make-environment graph code :name name)))
+   (tx-make-environment tree code :name name)))

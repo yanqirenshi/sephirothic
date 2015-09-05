@@ -3,78 +3,78 @@
 ;;;;;
 ;;;;; Key Value
 ;;;;;
-(defun fruit-at (key &key (graph *tree*))
-  (assert graph)
+(defun fruit-at (tree &key key)
+  (assert tree)
   (is-keyword key)
-  (find-object-with-slot graph 'fruit 'key key))
+  (find-object-with-slot tree 'fruit 'key key))
 
-(defun tx-make-fruit (graph key value)
-  (assert graph)
+(defun tx-make-fruit (tree key value)
+  (assert tree)
   (is-keyword key)
-  (tx-make-vertex graph 'fruit
+  (tx-make-vertex tree 'fruit
                   `((key ,key)
                     (value ,value))))
 
-(defun tx-make-relationship (graph from to)
+(defun tx-make-relationship (tree from to)
   (assert (and from to))
-  (tx-make-edge graph 'relationship from to :r))
+  (tx-make-edge tree 'relationship from to :r))
 
-(defun get-children (parent &key (graph *tree*))
-  (shinra:find-r graph 'relationship :from parent))
+(defun get-children (tree parent)
+  (shinra:find-r tree 'relationship :from parent))
 
-(defun get-child (parent key &key (graph *tree*) (auto-create nil))
-  (assert graph)
+(defun get-child (tree parent code &key (auto-create nil))
+  (assert tree)
   (assert parent)
-  (is-keyword key)
+  (is-keyword code)
   (let ((child (find-if #'(lambda (data)
-                            (eq (key (getf data :vertex)) key))
-                        (get-children parent :graph graph))))
+                            (eq (code (getf data :vertex)) code))
+                        (get-children tree parent))))
     (or child
         (when auto-create
-          (list :vertex  (add-fruit graph parent key nil)
+          (list :vertex  (add-fruit tree parent code nil)
                 :edge nil))))) ;; TODO: U...n
 
-
-(defun tx-add-fruit (graph parent key value)
-  (assert (and graph parent))
+(defun tx-add-fruit (tree parent key value)
+  (assert (and tree parent))
   (is-keyword key)
-  (when (get-child parent key :graph graph)
+  (when (get-child tree parent key)
     (error "Aledy exist. parent=~a, key=~a" parent key))
-  (let ((fruit (tx-make-fruit graph key value)))
+  (let ((fruit (tx-make-fruit tree key value)))
     (values fruit
-            (tx-make-relationship graph parent fruit))))
+            (tx-make-relationship tree parent fruit))))
 
-(defun tx-update-fruit (graph fruit &key value)
-  (up:tx-change-object-slots graph 'fruit (up:id fruit) `((value ,value)))
+(defun tx-update-fruit (tree fruit &key value)
+  (up:tx-change-object-slots tree 'fruit (up:id fruit) `((value ,value)))
   fruit)
 
-(defun update-fruit (graph fruit &key value)
+(defun update-fruit (tree fruit &key value)
   (up:execute-transaction
-   (tx-update-fruit graph fruit :value value)))
+   (tx-update-fruit tree fruit :value value)))
 
-(defgeneric add-fruit (graph parent key value)
-  (:method (graph (parent symbol) key value)
-    (add-fruit graph (fruit-at key) key value))
+(defgeneric add-fruit (tree parent key value)
+  (:method (tree (parent symbol) key value)
+    (add-fruit tree (fruit-at key) key value))
 
-  (:method (graph (parent fruit) key value)
+  (:method (tree (parent fruit) key value)
     (up:execute-transaction
-     (tx-add-fruit graph parent key value)))
+     (tx-add-fruit tree parent key value)))
 
-  (:method (graph (parent environment) key value)
+  (:method (tree (parent environment) key value)
     (up:execute-transaction
-     (tx-add-fruit graph parent key value))))
+     (tx-add-fruit tree parent key value))))
 
-(defun find-fruit (parent query &key (graph *tree*) (auto-create nil))
+(defun find-fruit (tree parent query &key (auto-create nil) (not-found-rise-error nil))
   (assert parent)
   (when query
     (let* ((key (car query))
            (next-query (cdr query))
-           (childe (get-child parent key :auto-create auto-create)))
-      (when childe
-        (if (null next-query)
-            (getf childe :vertex)
-            (find-fruit
-             (getf childe :vertex)
-             next-query
-             :graph graph
-             :auto-create auto-create))))))
+           (childe (get-child tree parent key :auto-create auto-create)))
+      (if (null childe)
+          (when not-found-rise-error (error "not found fruit."))
+          (if (null next-query)
+              (getf childe :vertex)
+              (find-fruit tree
+                          (getf childe :vertex)
+                          next-query
+                          :auto-create auto-create
+                          :not-found-rise-error not-found-rise-error))))))
