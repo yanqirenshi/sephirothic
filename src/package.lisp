@@ -1,6 +1,6 @@
 (in-package :cl-user)
 (defpackage sephirothic
-  (:nicknames :seph)
+  (:nicknames :stree)
   (:use :cl)
   (:import-from #:upanishad
                 #:find-object-with-slot)

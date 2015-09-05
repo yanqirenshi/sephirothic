@@ -3,16 +3,16 @@
 ;;;;;
 ;;;;; Key Value
 ;;;;;
-(defun fruit-at (tree &key key)
+(defun fruit-at (tree &key code)
   (assert tree)
-  (is-keyword key)
-  (find-object-with-slot tree 'fruit 'key key))
+  (is-keyword code)
+  (find-object-with-slot tree 'fruit 'code code))
 
-(defun tx-make-fruit (tree key value)
+(defun tx-make-fruit (tree code value)
   (assert tree)
-  (is-keyword key)
+  (is-keyword code)
   (tx-make-vertex tree 'fruit
-                  `((key ,key)
+                  `((code ,code)
                     (value ,value))))
 
 (defun tx-make-relationship (tree from to)
@@ -34,12 +34,12 @@
           (list :vertex  (add-fruit tree parent code nil)
                 :edge nil))))) ;; TODO: U...n
 
-(defun tx-add-fruit (tree parent key value)
+(defun tx-add-fruit (tree parent code value)
   (assert (and tree parent))
-  (is-keyword key)
-  (when (get-child tree parent key)
-    (error "Aledy exist. parent=~a, key=~a" parent key))
-  (let ((fruit (tx-make-fruit tree key value)))
+  (is-keyword code)
+  (when (get-child tree parent code)
+    (error "Aledy exist. parent=~a, code=~a" parent code))
+  (let ((fruit (tx-make-fruit tree code value)))
     (values fruit
             (tx-make-relationship tree parent fruit))))
 
@@ -51,24 +51,24 @@
   (up:execute-transaction
    (tx-update-fruit tree fruit :value value)))
 
-(defgeneric add-fruit (tree parent key value)
-  (:method (tree (parent symbol) key value)
-    (add-fruit tree (fruit-at key) key value))
+(defgeneric add-fruit (tree parent code value)
+  (:method (tree (parent symbol) code value)
+    (add-fruit tree (fruit-at code) code value))
 
-  (:method (tree (parent fruit) key value)
+  (:method (tree (parent fruit) code value)
     (up:execute-transaction
-     (tx-add-fruit tree parent key value)))
+     (tx-add-fruit tree parent code value)))
 
-  (:method (tree (parent environment) key value)
+  (:method (tree (parent environment) code value)
     (up:execute-transaction
-     (tx-add-fruit tree parent key value))))
+     (tx-add-fruit tree parent code value))))
 
 (defun find-fruit (tree parent query &key (auto-create nil) (not-found-rise-error nil))
   (assert parent)
   (when query
-    (let* ((key (car query))
+    (let* ((code (car query))
            (next-query (cdr query))
-           (childe (get-child tree parent key :auto-create auto-create)))
+           (childe (get-child tree parent code :auto-create auto-create)))
       (if (null childe)
           (when not-found-rise-error (error "not found fruit."))
           (if (null next-query)

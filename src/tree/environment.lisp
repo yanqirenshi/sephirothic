@@ -5,7 +5,11 @@
 ;;;;;
 (defun environment-at (tree &key code application)
   (assert tree)
-  (cond ((and code application) nil)
+  (cond ((and code application)
+         (getf (find-if #'(lambda (node)
+                            (eq (code (getf node :vertex)) code))
+                        (shinra:find-r tree 'relationship :from application))
+               :vertex))
         (code (node-at tree 'environment :code code))
         (t nil)))
 
@@ -15,8 +19,3 @@
     (error "Aledy exist. code=~code" code))
   (tx-make-vertex tree 'environment
                   `((code ,code) (name ,name))))
-
-(defun make-environment (tree code &key (name ""))
-  (assert tree)
-  (up:execute-transaction
-   (tx-make-environment tree code :name name)))

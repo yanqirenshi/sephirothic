@@ -18,3 +18,17 @@
   (assert tree)
   (up:execute-transaction
    (tx-make-application tree code :name name)))
+
+(defun tx-add-environment (tree application code &key (name ""))
+  (assert (and tree application))
+  (is-keyword code)
+  (when (environment-at tree :application application :code code)
+    (error "Aledy exist."))
+  (let ((environment (tx-make-environment tree code :name name)))
+    (values environment
+            (tx-make-relationship tree application environment))))
+
+(defun add-environment (tree application code &key (name ""))
+  (assert tree)
+  (up:execute-transaction
+   (tx-add-environment tree application code :name name)))
