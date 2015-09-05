@@ -4,19 +4,19 @@
   (let ((env (environment-at :code environment)))
     (assert env)
     (unless *tree* (start))
-    (let ((key-value (find-key-value env query)))
-      (when key-value
-        (value key-value)))))
+    (let ((fruit (find-fruit env query)))
+      (when fruit
+        (value fruit)))))
 
 (defun (setf conf*) (value environment &rest query)
   (let ((env (environment-at :code environment)))
     (assert env)
     (let ((graph *tree*)
-          (key-value (find-key-value env query :auto-create t)))
+          (fruit (find-fruit env query :auto-create t)))
       (unless graph (start))
-      (assert key-value)
+      (assert fruit)
       (assert graph)
-      (update-key-value graph key-value :value value))))
+      (update-fruit graph fruit :value value))))
 
 (defun conf (&rest query)
   (assert *environment*)

@@ -9,15 +9,23 @@
          :initform nil)
    (description :accessor description
                 :initarg :description
-                :initform nil)))
+                :initform nil))
+  (:documentation ""))
 
-(defclass application (node) ())
+(defclass application (node)
+  ()
+  (:documentation ""))
 
-(defclass environment (node) ())
+(defclass environment (node)
+  ()
+  (:documentation ""))
 
 (defclass fruit (node)
   ((value :accessor value
           :initarg :value
-          :initform nil)))
+          :initform nil))
+  (:documentation ""))
 
-(defclass relationship (shinra:ra) ())
+(defclass relationship (shinra:ra)
+  ()
+  (:documentation ""))

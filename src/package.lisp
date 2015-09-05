@@ -14,13 +14,13 @@
            ;; env
            :environment-at
            :make-environment
-           ;; key-value
-           :key-value-at
+           ;; fruit
+           :fruit-at
            :get-children
            :get-child
-           :update-key-value
-           :add-key-value
-           :find-key-value
+           :update-fruit
+           :add-fruit
+           :find-fruit
            ;; sephirothic
            :conf*
            :conf))

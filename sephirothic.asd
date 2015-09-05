@@ -1,10 +1,10 @@
 #|
-  This file is a part of sephirothic project.
-  Copyright (c) 2015 Satoshi Iwasaki (yanqirenshi@gmail.com)
+This file is a part of sephirothic project.
+Copyright (c) 2015 Satoshi Iwasaki (yanqirenshi@gmail.com)
 |#
 
 #|
-  Author: Satoshi Iwasaki (yanqirenshi@gmail.com)
+Author: Satoshi Iwasaki (yanqirenshi@gmail.com)
 |#
 
 (in-package :cl-user)
@@ -22,12 +22,15 @@
                 :components
                 ((:file "package")
                  (:file "util" :depends-on ("package"))
-                 (:file "class" :depends-on ("util"))
-                 (:file "tree" :depends-on ("class"))
-                 (:file "application" :depends-on ("tree"))
-                 (:file "environment" :depends-on ("application"))
-                 (:file "fruit" :depends-on ("environment"))
-                 (:file "sephirothic" :depends-on ("key-value")))))
+                 (:module "tree"
+                  :components ((:file "class")
+                               (:file "tree" :depends-on ("class"))
+                               (:file "node" :depends-on ("tree"))
+                               (:file "application" :depends-on ("node"))
+                               (:file "environment" :depends-on ("application"))
+                               (:file "fruit" :depends-on ("environment")))
+                  :depends-on ("util"))
+                 (:file "sephirothic" :depends-on ("tree")))))
   :description ""
   :long-description
   #.(with-open-file (stream (merge-pathnames

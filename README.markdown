@@ -15,8 +15,11 @@ hanage
 
 ## Installation
 ```
-(ql:quickload :Sephirothic)
+(ql:quickload :sephirothic)
 ```
+
+## Origin of a name
+[Tree of Life](https://en.wikipedia.org/wiki/Tree_of_life)
 
 ## Author
 
