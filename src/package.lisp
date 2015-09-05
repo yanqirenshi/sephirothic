@@ -7,7 +7,9 @@
   (:import-from #:shinrabanshou
                 #:tx-make-vertex
                 #:tx-make-edge)
-  (:export #:*tree-stor*
+  (:export #:fruit*
+           #:fruit
+           #:*tree-stor*
            #:*tree*
            ;; appl
            #:application-at
@@ -15,9 +17,9 @@
            ;; env
            #:environment-at
            #:make-environment
-           ;; fruit
-           #:fruit))
+           ;; tree
+           #:make-tree
+           #:close-tree
+           #:snapshot
+           #:restore))
 (in-package :sephirothic)
-
-(defvar *tree-stor* nil)
-(defvar *tree* nil)

@@ -15,7 +15,5 @@
 
 (defun tx-make-environment (tree code &key (name ""))
   (assert tree)
-  (when (environment-at tree :code code)
-    (error "Aledy exist. code=~code" code))
   (tx-make-vertex tree 'environment
                   `((code ,code) (name ,name))))

@@ -1,11 +1,11 @@
 (in-package :sephirothic)
 
-(defun start (&key (tree-stor *tree-stor*))
+(defun make-tree (tree-stor)
   (unless tree-stor (error "tree-stor is empty."))
   (let ((data-stor tree-stor))
     (shinra:make-banshou 'shinra:banshou data-stor)))
 
-(defun stop (tree &key (auto-commit nil))
+(defun close-tree (tree &key (auto-commit nil))
   (unless tree
     (error "まだ初まってもいません。"))
   (when auto-commit
@@ -13,6 +13,6 @@
   (up:close-open-streams tree)
   (setf tree nil))
 
-(defun commit (graph) (up:snapshot graph))
+(defun snapshot (tree) (up:snapshot tree))
 
-(defun restore (graph) (up:restore graph))
+(defun restore (tree) (up:restore tree))
