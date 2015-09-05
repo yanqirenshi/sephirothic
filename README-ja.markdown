@@ -1,9 +1,15 @@
 # Sephirothic
-Configuration 4 your applications
+あなたのアプリケーションのための設定を管理します。
 
-## Usage
+## 使い方
+使い方には二種類あります。
 
-### Common
+| 種類               | 概要                                        |
+|--------------------|---------------------------------------------|
+| 共通の使い方       | slime立ちあげた時に全アプリで共通で使う場合 |
+| コアな部分の使い方 | 特定のアプリ個別にカスタマイズしたい場合    |
+
+### 共通の使い方
 ```
 CL-USER> (in-package :sephirothic)
 #<PACKAGE "SEPHIROTHIC">
@@ -15,7 +21,7 @@ STREE> (fruit :node1 :node2 :node3)
 "hanage"
 ```
 
-### Core
+### コアな部分の使い方
 ```
 CL-USER> (in-package :sephirothic)
 #<PACKAGE "SEPHIROTHIC">
@@ -39,22 +45,22 @@ STREE> (fruit* *tree* :appl :env '(:node1 :node2 :node3))
 "hanage"
 ```
 
-## Installation
+## インストール
 ```
 (ql:quickload :sephirothic)
 ```
 
-## Origin of a name
+## 名前の由来
 [Tree of Life](https://en.wikipedia.org/wiki/Tree_of_life)
 
-## Author
+## 著者
 
 * Satoshi Iwasaki (yanqirenshi@gmail.com)
 
-## Copyright
+## 著作権
 
 Copyright (c) 2015 Satoshi Iwasaki (yanqirenshi@gmail.com)
 
-## License
+## ライセンス
 
 Licensed under the LLGPL License.
