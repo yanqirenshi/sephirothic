@@ -38,7 +38,7 @@
   (assert (and tree parent))
   (is-keyword code)
   (when (get-child tree parent code)
-    (error "Aledy exist. parent=~a, code=~a" parent code))
+    (error* :alredy-exist-fruit parent code))
   (let ((fruit (tx-make-fruit tree code value)))
     (values fruit
             (tx-make-relationship tree parent fruit))))
@@ -70,7 +70,7 @@
            (next-query (cdr query))
            (childe (get-child tree parent code :auto-create auto-create)))
       (if (null childe)
-          (when not-found-rise-error (error "not found fruit."))
+          (when not-found-rise-error (error* :fruit-not-found query))
           (if (null next-query)
               (getf childe :vertex)
               (find-fruit tree

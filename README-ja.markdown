@@ -10,7 +10,7 @@
 | コアな部分の使い方 | 特定のアプリ個別にカスタマイズしたい場合    |
 
 ### 共通の使い方
-```
+``` common-lisp
 CL-USER> (in-package :sephirothic)
 #<PACKAGE "SEPHIROTHIC">
 STREE> (fruit :node1 :node2 :node3)
@@ -22,7 +22,7 @@ STREE> (fruit :node1 :node2 :node3)
 ```
 
 ### コアな部分の使い方
-```
+``` common-lisp
 CL-USER> (in-package :sephirothic)
 #<PACKAGE "SEPHIROTHIC">
 
@@ -46,7 +46,7 @@ STREE> (fruit* *tree* :appl :env '(:node1 :node2 :node3))
 ```
 
 ## インストール
-```
+``` common-lisp
 (ql:quickload :sephirothic)
 ```
 

@@ -1,7 +1,7 @@
 (in-package :sephirothic)
 
 (defun make-tree (tree-stor)
-  (unless tree-stor (error "tree-stor is empty."))
+  (unless tree-stor (error* :is-empty "tree-stor" tree-stor))
   (let ((data-stor tree-stor))
     (shinra:make-banshou 'shinra:banshou data-stor)))
 
