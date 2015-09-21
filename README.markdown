@@ -4,7 +4,7 @@ Configuration 4 your applications
 ## Usage
 
 ### Common
-```
+``` common-lisp
 CL-USER> (in-package :sephirothic)
 #<PACKAGE "SEPHIROTHIC">
 STREE> (fruit :node1 :node2 :node3)
@@ -16,7 +16,7 @@ STREE> (fruit :node1 :node2 :node3)
 ```
 
 ### Core
-```
+``` common-lisp
 CL-USER> (in-package :sephirothic)
 #<PACKAGE "SEPHIROTHIC">
 
@@ -40,7 +40,7 @@ STREE> (fruit* *tree* :appl :env '(:node1 :node2 :node3))
 ```
 
 ## Installation
-```
+``` common-lisp
 (ql:quickload :sephirothic)
 ```
 
