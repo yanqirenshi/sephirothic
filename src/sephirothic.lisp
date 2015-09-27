@@ -1,6 +1,12 @@
 (in-package :sephirothic)
 
 ;;;;;
+;;;;; Initialize message
+;;;;;
+(w2w:add-messages *message-list*)
+
+
+;;;;;
 ;;;;; Core
 ;;;;;
 (defun fruit* (tree application environment query

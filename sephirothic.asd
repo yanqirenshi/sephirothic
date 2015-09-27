@@ -21,7 +21,7 @@ Author: Satoshi Iwasaki (yanqirenshi@gmail.com)
   :components ((:module "src"
                 :components
                 ((:file "package")
-                 (:file "message" :depends-on ("package"))
+                 (:file "data/messages" :depends-on ("package"))
                  (:file "util" :depends-on ("package"))
                  (:module "tree"
                   :components ((:file "class")
