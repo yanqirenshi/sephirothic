@@ -10,7 +10,7 @@
 (defun tx-make-application (tree code &key (name ""))
   (assert tree)
   (when (application-at tree :code code)
-    (error "Aledy exist. code=~code" code))
+    (error* :alredy-exist 'application code))
   (tx-make-vertex tree 'application
                   `((code ,code) (name ,name))))
 
@@ -23,7 +23,7 @@
   (assert (and tree application))
   (is-keyword code)
   (when (environment-at tree :application application :code code)
-    (error "Aledy exist."))
+    (error* :alredy-exist-env-at-appl 'environment code application))
   (let ((environment (tx-make-environment tree code :name name)))
     (values environment
             (tx-make-relationship tree application environment))))
