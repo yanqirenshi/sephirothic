@@ -30,5 +30,7 @@
            #:make-tree
            #:close-tree
            #:snapshot
-           #:restore))
+           #:restore
+           ;; context
+           #:get-sephirothic-context))
 (in-package :sephirothic)
