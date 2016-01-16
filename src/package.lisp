@@ -23,6 +23,7 @@
            #:fruit
            #:*tree-stor*
            #:*tree*
+           #:code
            ;; appl
            #:application-at
            #:make-application

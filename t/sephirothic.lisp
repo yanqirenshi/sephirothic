@@ -1,8 +1,8 @@
 (in-package :cl-user)
 (defpackage sephirothic-test
-  (:use :cl
-   :sephirothic
-        :prove))
+  (:use #:cl
+        #:sephirothic
+        #:prove))
 (in-package :sephirothic-test)
 
 (plan 9)
@@ -23,11 +23,11 @@
   (ok (make-application tree appl-code :name "生命の木"))
 
   (setf appl (application-at tree :code appl-code))
-  (is (stree::code appl) appl-code "Create application")
+  (is (seph:code appl) appl-code "Create application")
 
-  (stree::add-environment tree appl env-code :name "本番環境")
+  (seph::add-environment tree appl env-code :name "本番環境")
   (setf env (environment-at tree :code env-code :application appl))
-  (is (stree::code env) env-code "Create environment")
+  (is (seph:code env) env-code "Create environment")
 
   (is (fruit* tree :sephirothic-tree :production query) nil "can return nil")
   (is-error (fruit* tree :sephirothic-tree :production query :not-found-rise-error t)
