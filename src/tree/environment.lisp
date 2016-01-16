@@ -6,7 +6,7 @@
 (defun %environment-at (tree code application)
   (cond ((and code application)
          (getf (find-if #'(lambda (node)
-                            (eq (code (getf node :vertex)) env-code))
+                            (eq (code (getf node :vertex)) code))
                         (find-r tree 'relationship :from application))
                :vertex))
         (code
