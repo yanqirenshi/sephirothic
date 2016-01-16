@@ -49,17 +49,15 @@
   (unless *tree* (setf *tree* (make-tree *tree-stor*)))
   *tree*)
 
-(defun get-common-sephirothic-context ()
-  (let* ((tree (get-internal-tree))
-         (appl-code (intern (package-name *package*) :keyword))
+(defun get-common-sephirothic-context (&key (tree (get-internal-tree)))
+  (let* ((appl-code (intern (package-name *package*) :keyword))
          (env-code :anonymous)
          (appl (application-at tree :code appl-code :ensure t)))
     (values tree
             appl-code
             env-code
             appl
-            (environment-at tree :code env-code :application appl :ensure t)
-            (ensure-environment appl env-code :tree tree))))
+            (environment-at tree :code env-code :application appl :ensure t))))
 
 (defun fruit (&rest query)
   (multiple-value-bind (tree appl env)
@@ -75,4 +73,3 @@
                   :auto-create *auto-create*
                   :not-found-rise-error *not-found-rise-error*)
           value)))
-
