@@ -49,16 +49,6 @@
   (unless *tree* (setf *tree* (make-tree *tree-stor*)))
   *tree*)
 
-(defun ensure-application (code &key (tree *tree*))
-  (let ((appl (application-at tree :code code)))
-    (or appl
-        (make-application tree code))))
-
-(defun ensure-environment (appl code &key (tree *tree*))
-  (let ((env (environment-at tree :code code :application appl)))
-    (or env
-        (add-environment tree appl code))))
-
 (defun get-common-sephirothic-context ()
   (let* ((tree (get-internal-tree))
          (appl-code (intern (package-name *package*) :keyword))
