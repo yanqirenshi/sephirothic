@@ -63,11 +63,12 @@
   (let* ((tree (get-internal-tree))
          (appl-code (intern (package-name *package*) :keyword))
          (env-code :anonymous)
-         (appl (ensure-application appl-code :tree tree)))
+         (appl (application-at tree :code appl-code :ensure t)))
     (values tree
             appl-code
             env-code
             appl
+            (environment-at tree :code env-code :application appl :ensure t)
             (ensure-environment appl env-code :tree tree))))
 
 (defun fruit (&rest query)
