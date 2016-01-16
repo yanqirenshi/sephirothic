@@ -24,12 +24,8 @@
            #:*tree-stor*
            #:*tree*
            #:code
-           ;; appl
            #:application-at
-           #:make-application
-           ;; env
            #:environment-at
-           #:make-environment
            ;; tree
            #:make-tree
            #:close-tree
