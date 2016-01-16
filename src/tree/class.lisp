@@ -1,6 +1,6 @@
 (in-package :sephirothic)
 
-(defclass node (shinra:shin)
+(defclass node (shin)
   ((code :accessor code
          :initarg :code
          :initform nil)
@@ -26,6 +26,6 @@
           :initform nil))
   (:documentation ""))
 
-(defclass relationship (shinra:ra)
+(defclass relationship (ra)
   ()
   (:documentation ""))

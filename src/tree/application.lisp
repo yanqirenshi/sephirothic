@@ -16,7 +16,7 @@
 
 (defun make-application (tree code &key (name ""))
   (assert tree)
-  (up:execute-transaction
+  (execute-transaction
    (tx-make-application tree code :name name)))
 
 (defun tx-add-environment (tree application code &key (name ""))
@@ -30,5 +30,5 @@
 
 (defun add-environment (tree application code &key (name ""))
   (assert tree)
-  (up:execute-transaction
+  (execute-transaction
    (tx-add-environment tree application code :name name)))

@@ -6,7 +6,7 @@
 (defun fruit-at (tree &key code)
   (assert tree)
   (is-keyword code)
-  (find-object-with-slot tree 'fruit 'code code))
+  (find-objects tree 'fruit :slot 'code :value code))
 
 (defun tx-make-fruit (tree code value)
   (assert tree)
@@ -20,7 +20,7 @@
   (tx-make-edge tree 'relationship from to :r))
 
 (defun get-children (tree parent)
-  (shinra:find-r tree 'relationship :from parent))
+  (find-r tree 'relationship :from parent))
 
 (defun get-child (tree parent code &key (auto-create nil))
   (assert tree)
@@ -44,11 +44,11 @@
             (tx-make-relationship tree parent fruit))))
 
 (defun tx-update-fruit (tree fruit &key value)
-  (up:tx-change-object-slots tree 'fruit (up:id fruit) `((value ,value)))
+  (tx-change-object-slots tree 'fruit (%id fruit) `((value ,value)))
   fruit)
 
 (defun update-fruit (tree fruit &key value)
-  (up:execute-transaction
+  (execute-transaction
    (tx-update-fruit tree fruit :value value)))
 
 (defgeneric add-fruit (tree parent code value)
@@ -56,11 +56,11 @@
     (add-fruit tree (fruit-at code) code value))
 
   (:method (tree (parent fruit) code value)
-    (up:execute-transaction
+    (execute-transaction
      (tx-add-fruit tree parent code value)))
 
   (:method (tree (parent environment) code value)
-    (up:execute-transaction
+    (execute-transaction
      (tx-add-fruit tree parent code value))))
 
 (defun find-fruit (tree parent query &key (auto-create nil) (not-found-rise-error nil))

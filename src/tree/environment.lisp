@@ -8,7 +8,7 @@
   (cond ((and code application)
          (getf (find-if #'(lambda (node)
                             (eq (code (getf node :vertex)) code))
-                        (shinra:find-r tree 'relationship :from application))
+                        (find-r tree 'relationship :from application))
                :vertex))
         (code (node-at tree 'environment :code code))
         (t nil)))
