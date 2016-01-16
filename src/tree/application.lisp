@@ -3,9 +3,12 @@
 ;;;;;
 ;;;;; Application
 ;;;;;
-(defun application-at (tree &key code)
+(defun application-at (tree &key code (ensure nil))
   (assert tree)
-  (node-at tree 'application :code code))
+  (let ((appl (node-at tree 'application :code code)))
+    (or appl
+        (when (and code ensure)
+          (make-application tree code)))))
 
 (defun tx-make-application (tree code &key (name ""))
   (assert tree)
