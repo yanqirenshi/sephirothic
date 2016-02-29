@@ -9,7 +9,6 @@
                 #:tx-change-object-slots
                 #:%id
                 #:execute-transaction
-                #:snapshot
                 #:close-open-streams)
   (:import-from #:shinrabanshou
                 #:tx-make-vertex
