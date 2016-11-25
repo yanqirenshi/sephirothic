@@ -3,6 +3,11 @@
 ;;;;;
 ;;;;; Environment
 ;;;;;
+(defun environments (tree application)
+  (mapcar #'(lambda (result)
+              (getf result :vertex))
+          (find-r tree 'relationship :from application)))
+
 (defun %environment-at (tree code application)
   (cond ((and code application)
          (getf (find-if #'(lambda (node)

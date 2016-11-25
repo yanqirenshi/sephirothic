@@ -3,6 +3,9 @@
 ;;;;;
 ;;;;; Application
 ;;;;;
+(defun applications (tree)
+  (find-objects tree 'application))
+
 (defun application-at (tree &key code (ensure nil))
   (assert tree)
   (let ((appl (node-at tree 'application :code code)))

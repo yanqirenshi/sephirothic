@@ -23,7 +23,9 @@
            #:*tree-stor*
            #:*tree*
            #:code
+           #:applications
            #:application-at
+           #:environments
            #:environment-at
            ;; tree
            #:make-tree
